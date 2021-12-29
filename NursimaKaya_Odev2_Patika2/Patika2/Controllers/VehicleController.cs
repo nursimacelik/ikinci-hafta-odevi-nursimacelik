@@ -60,6 +60,37 @@ namespace Patika2.Controllers
         }
 
 
+        [HttpGet("{id}/{n}")]
+        public async Task<IActionResult> SplitContainers([FromRoute] long id, [FromRoute] int n)
+        {
+            var vehicle = await unitOfWork.Vehicle.GetById(id);
+
+            if (vehicle is null)
+            {
+                return NotFound();
+            }
+
+            var containerList = await unitOfWork.Vehicle.GetContainers(id);
+
+            // split into n batches
+            var batches = new List<List<Container>>();
+            var temp = new List<Container>();
+            var count = 0;
+            foreach(Container c in containerList)
+            {
+                temp.Add(c);
+                count++;
+                if(count == n || c == containerList.Last<Container>())
+                {
+                    batches.Add(temp);
+                    temp = new List<Container>();
+                    count = 0;
+                }
+            }
+            return Ok(batches);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Vehicle entity)
         {
