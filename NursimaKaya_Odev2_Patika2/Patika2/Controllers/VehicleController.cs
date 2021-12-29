@@ -27,8 +27,8 @@ namespace Patika2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var listofbooks = await unitOfWork.Vehicle.GetAll();
-            return Ok(listofbooks);
+            var vehicleList = await unitOfWork.Vehicle.GetAll();
+            return Ok(vehicleList);
         }
 
 
@@ -43,6 +43,20 @@ namespace Patika2.Controllers
             }
 
             return Ok(vehicle);
+        }
+
+        [HttpGet("{id}/Containers")]
+        public async Task<IActionResult> GetContainers(long id)
+        {
+            var vehicle = await unitOfWork.Vehicle.GetById(id);
+
+            if (vehicle is null)
+            {
+                return NotFound();
+            }
+
+            var containerList = await unitOfWork.Vehicle.GetContainers(id);
+            return Ok(containerList);
         }
 
 

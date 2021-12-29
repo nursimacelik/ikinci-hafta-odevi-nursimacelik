@@ -47,6 +47,16 @@ namespace Data.VehicleRepo
             return base.GetAll();
         }
 
+        public async Task<IEnumerable<Container>> GetContainers(long id)
+        {
+            var sql = "SELECT Container.Id, ContainerName, Latitude, Longitude, VehicleId FROM Vehicle, Container WHERE Vehicle.Id = Container.VehicleId AND Vehicle.Id = @Id";
+            using (var connection = new SqlConnection("Server=LAPTOP-7JP2QLB1\\MSSQLSERVER2; Database=Patika2; Trusted_Connection=True;"))
+            {
+                connection.Open();
+                var result = await connection.QueryAsync<Container>(sql, new { Id = id });
+                return result;
+            }
+        }
 
 
         public Task<bool> Update(Vehicle entity)
