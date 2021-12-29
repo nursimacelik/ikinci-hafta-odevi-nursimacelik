@@ -69,7 +69,7 @@ namespace Patika2.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteById(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             var container = await unitOfWork.Container.GetById(id);
 

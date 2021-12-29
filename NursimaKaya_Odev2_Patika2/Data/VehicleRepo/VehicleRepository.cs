@@ -31,7 +31,7 @@ namespace Data.VehicleRepo
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             var sql = "DELETE FROM Vehicle WHERE Id = @Id";
             using (var connection = new SqlConnection("Server=LAPTOP-7JP2QLB1\\MSSQLSERVER2; Database=Patika2; Trusted_Connection=True;"))

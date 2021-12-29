@@ -63,6 +63,21 @@ namespace Patika2.Controllers
 
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var vehicle = await unitOfWork.Vehicle.GetById(id);
+
+            if (vehicle is null)
+            {
+                return NotFound();
+            }
+            await unitOfWork.Vehicle.Delete(id);
+            unitOfWork.Complete();
+
+            return Ok();
+        }
     }
 
 }
